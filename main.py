@@ -20,6 +20,20 @@ while(1):
 	del args[x]
 	del args[x]
 
+llen =len(args)
+i=1
+while(i<llen):
+	if(args[i-1]=='(' or args[i-1]==')' or args[i-1]=='+' or args[i-1]=='-' or args[i-1]=='*' or args[i-1]=='/' or args[i-1]=='^'):
+		i+=1
+		continue
+	if(args[i]!='(' and args[i]!=')' and args[i]!='+' and args[i]!='-' and args[i]!='*' and args[i]!='/' and args[i]!='^'):
+		args[i-1]+=args[i]
+		del args[i]
+		llen-=1
+		i-=1
+	i+=1
+
+
 #get nibolan list
 pri={'(':0,')':0, '+':1,'-':1, '*':2,'/':2,'^':3}
 stack1=[]
@@ -58,7 +72,6 @@ for x in args:
 
 while(len(stack1)!=0):
 	stack2.append(stack1.pop())
-#ab+c*ab+e/-
 
 nibolan=[]
 stack=[]
