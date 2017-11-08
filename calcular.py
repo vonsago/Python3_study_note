@@ -1,11 +1,15 @@
-#!//bin/python
-# -*- coding: UTF-8 -*-
-import sys 
+#!/usr/bin/env python
+# coding=utf-8
 '''
-date : 2017-09-08
-@author: vassago
+*************************************************************************
+    > File Name: valc.py
+    > Author: vassago
+    > Mail: f811194414@gmail.com
+    > Created Time: 二 11/ 7 18:18:08 2017
+ ************************************************************************
 '''
 
+import sys 
 #get and update the data
 def process_args(args):
     #合并，组成正确的小数
@@ -37,7 +41,7 @@ def get_nibolan_list(args):
     #get nibolan list
     pri={'(':0,')':0, '+':1,'-':1, '*':2,'/':2,'^':3}
     stack1,stack2=[],[]
-    
+
     for x in args:
         if(x=='main.py' or x==' '):
             continue
@@ -46,8 +50,12 @@ def get_nibolan_list(args):
         elif(x==')'):
             top=stack1.pop()
             while(top!='('):
-                stack2.append(top)
-                top=stack1.pop()
+                try:
+                    stack2.append(top)
+                    top=stack1.pop()
+                except:
+                    print("FORMAT ERROR")
+                    return 
         elif(x=='+' or x=='-' or x=='*' or x=='/' or x=='^'):
             if(len(stack1)==0):
                 stack1.append(x)
@@ -83,7 +91,10 @@ def process_nibolan(nibolan):
     #output the answer
     stack,fla=[],1
     while(1):
-        top=nibolan.pop()
+        try:
+            top=nibolan.pop()
+        except:
+            return 
         if(top=='+' or top=='-' or top=='*' or top=='/' or top=='^'):
             try:
                 y=float(stack.pop())
@@ -107,9 +118,10 @@ def process_nibolan(nibolan):
                 if(top=='/'):
                     stack.append(x/y)
                 if(top=='^'):
+                    assert(x!=0)
                     stack.append(x**y)
-            except ValueError :
-                print('Value Error')
+            except :
+                print('VALUE ERROR')
                 fla=0
                 break
 
@@ -119,17 +131,23 @@ def process_nibolan(nibolan):
             stack.append(top)
         if(len(nibolan)==0):
             break
-    return stack[0]
+    if(fla):
+        return stack[0]
 
 if __name__ == '__main__':
-    
-    # test using : python main.py "1+2^2-3*(2-1)/3"
-
-    string=""
-    for x in sys.argv:
-        if(x=="main.py" or x==' '):
+    string = ''
+    for x in sys.argv[-1]:
+        if(x==' '):
             continue
         string+=x
 
     args=list(string)
-    print (process_nibolan(get_nibolan_list(process_args(args)))
+    ans = (process_nibolan(get_nibolan_list(process_args(args))))
+    if(ans!= None):
+        try:
+            if(round(ans) == ans):
+                print(round(ans))
+            else:
+                print(round(ans,10))
+        except:
+            print("VALUE ERROR")
