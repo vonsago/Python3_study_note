@@ -55,3 +55,7 @@ if __name__ == '__main__':
     q.push(Item('spam'), 4)
     q.push(Item('grok'), 1)
     print(q._queue)
+    print(q.pop())
+    print(q.pop())
+    print(q.pop())
+    print(q.pop())
