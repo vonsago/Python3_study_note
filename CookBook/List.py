@@ -7,8 +7,10 @@
 > Created Time: 四  3/22 18:03:31 2018
 '''
 from collections import Counter
+from operator import itemgetter
 '''note 1 列表元素去重
->>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}] >>> list(dedupe(a, key=lambda d: (d['x'],d['y'])))
+>>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
+>>> list(dedupe(a, key=lambda d: (d['x'],d['y'])))
 [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
 >>> list(dedupe(a, key=lambda d: d['x']))
 [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
@@ -44,10 +46,17 @@ def dedupe(items, key=None):
 
 
 if __name__ == '__main__':
+    a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
+    l1=list(dedupe(a, key=lambda d: (d['x'],d['y'])))
+    print(l1)
+    l2=list(dedupe(a, key=lambda d: d['x']))
+    print(l2)
+
+    print('---note 1---')
     a = slice(2, 5)
     l = [1, 2, 3, 4, 5, 6, 7]
     print(l[a])
-    print('------')
+    print('---note 2---')
     words = [
         'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
         'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
@@ -66,6 +75,13 @@ if __name__ == '__main__':
     同类之间可以进行+ - :w
 
     '''
-    print('-------')
-
+    print('---note 3---')
+    rows = [
+    {'fname': 'Brian', 'lname': 'Jones', 'uid': 1003},
+    {'fname': 'David', 'lname': 'Beazley', 'uid': 1002},
+    {'fname': 'John', 'lname': 'Cleese', 'uid': 1001},
+    {'fname': 'Big', 'lname': 'Jones', 'uid': 1004}
+    ]
+    rows_by_lfname = sorted(rows, key=itemgetter('lname','fname'))
+    print(rows_by_lfname)
 

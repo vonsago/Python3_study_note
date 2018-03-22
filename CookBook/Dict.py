@@ -9,7 +9,8 @@
 '''note 1 在数据字典中执行一些计算操作
 注意
 执行这些计算的时候，需要注意的是 zip() 函数创建的是一个只能访问一次的迭代器
-prices_and_names = zip(prices.values(), prices.keys()) print(min(prices_and_names)) # OK
+prices_and_names = zip(prices.values(), prices.keys()) 
+print(min(prices_and_names)) # OK
 print(max(prices_and_names)) # ValueError: max() arg is an empty sequence
 '''
 '''note 2 两个字典中寻找相同点
