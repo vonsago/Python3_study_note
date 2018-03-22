@@ -8,9 +8,28 @@
 '''
 from collections import OrderedDict, defaultdict
 
+'''note 1 OrderedDict
+创建一个字典，并且在迭代或序列化这个字典的时候能够控制元素的顺序
+'''
+
+'''note 2 defaultdict
+一个键对应多个值的字典
+'''
+
 if __name__ == '__main__':
     de = defaultdict(set)
     de['a'].add(1)
     de['a'].add(2)
     de['b'].add(3)
     print(de)
+    print('-----')
+    ord = OrderedDict()
+    ord['foo'] = 1
+    ord['bar'] = 2
+    ord['spam'] = 3 
+    ord['grok'] = 4
+    oo = {}
+    oo['foo'],oo['bar'],oo['spam'],oo['grok']=1,2,3,4
+    print(ord)
+    print('simple dict:',oo)
+    print('-----')
