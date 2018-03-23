@@ -6,15 +6,17 @@
 > Mail: f811194414@gmail.com
 > Created Time: 四  3/22 15:09:27 2018
 '''
-'''note 1 在数据字典中执行一些计算操作
+'''
+---note 1 在数据字典中执行一些计算操作
 注意
 执行这些计算的时候，需要注意的是 zip() 函数创建的是一个只能访问一次的迭代器
 prices_and_names = zip(prices.values(), prices.keys()) 
 print(min(prices_and_names)) # OK
 print(max(prices_and_names)) # ValueError: max() arg is an empty sequence
-'''
-'''note 2 两个字典中寻找相同点
 
+---note 2 两个字典中寻找相同点
+items()
+以列表返回可遍历的(键, 值) 元组数组
 '''
 
 if __name__ == '__main__':
@@ -27,7 +29,7 @@ if __name__ == '__main__':
     }
     prices_sorted = sorted(zip(prices.values(), prices.keys()))
     print(prices_sorted)
-    print('-----')
+    print('---note 1---')
 
     a = {
         'x': 1,
@@ -43,4 +45,14 @@ if __name__ == '__main__':
     a.keys() - b.keys()  # { 'z' }
     # Find (key,value) pairs in common
     a.items() & b.items()  # { ('y', 2) }
+
+    p1 = {key: value for key, value in prices.items() if value > 200}
+    print(p1)
+    # is twice as fast as this
+    p1 = dict((key, value) for key, value in prices.items() if value > 200)
+
+    tech_names = { 'AAPL', 'IBM', 'HPQ', 'MSFT' }
+    p2 = { key:prices[key] for key in prices.keys() & tech_names }
+
+    print('---note 2---')
 

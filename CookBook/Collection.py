@@ -6,15 +6,16 @@
 > Mail: f811194414@gmail.com
 > Created Time: 四  3/22 14:22:27 2018
 '''
-from collections import OrderedDict, defaultdict
-
-'''note 1 OrderedDict
-创建一个字典，并且在迭代或序列化这个字典的时候能够控制元素的顺序
+from collections import OrderedDict, defaultdict \
+        ,namedtuple
 '''
+---note 1 OrderedDict
+创建一个字典，并且在迭代或序列化这个字典的时候能够控制元素的顺序
 
-'''note 2 defaultdict
+---note 2 defaultdict
 一个键对应多个值的字典
 '''
+
 
 if __name__ == '__main__':
     de = defaultdict(set)
@@ -22,7 +23,7 @@ if __name__ == '__main__':
     de['a'].add(2)
     de['b'].add(3)
     print(de)
-    print('-----')
+    print('---ntoe 1---')
     ord = OrderedDict()
     ord['foo'] = 1
     ord['bar'] = 2
@@ -32,4 +33,6 @@ if __name__ == '__main__':
     oo['foo'],oo['bar'],oo['spam'],oo['grok']=1,2,3,4
     print(ord)
     print('simple dict:',oo)
-    print('-----')
+    print('---note 2---')
+
+
