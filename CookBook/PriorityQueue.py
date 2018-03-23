@@ -30,6 +30,8 @@
 二者都是定制类
 直接显示变量调用的不是__str__()，而是__repr__()，两者的区别是__str__()返回用户看到的字符串，而__repr__()返回程序开发者看到的字符串，也就是说，__repr__()是为调试服务的
 
+fromat()
+ “!r” 对应 repr()； “!s” 对应 str(); “!a” 对应 ascii()
 '''
 import heapq
 class PriorityQueue:

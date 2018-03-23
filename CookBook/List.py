@@ -32,10 +32,6 @@ d
 通过调用切片的 indices(size) 方法将它映射到一个确定大小的序 列上，这个方法返回一个三元组 (start, stop, step) ，所有值都会被合适的缩小以 满足边界限制，从而使用的时候避免出现 IndexError 异常
 '''
 
-'''note 3 对字典列表排序
-
-'''
-
 def dedupe(items, key=None):
     seen = set()
     for item in items:
@@ -76,12 +72,4 @@ if __name__ == '__main__':
 
     '''
     print('---note 3---')
-    rows = [
-    {'fname': 'Brian', 'lname': 'Jones', 'uid': 1003},
-    {'fname': 'David', 'lname': 'Beazley', 'uid': 1002},
-    {'fname': 'John', 'lname': 'Cleese', 'uid': 1001},
-    {'fname': 'Big', 'lname': 'Jones', 'uid': 1004}
-    ]
-    rows_by_lfname = sorted(rows, key=itemgetter('lname','fname'))
-    print(rows_by_lfname)
 
