@@ -6,8 +6,12 @@
 > Mail: f811194414@gmail.com
 > Created Time: 五  3/23 10:03:24 2018
 '''
+
 from operator import itemgetter, attrgetter
-'''note 1 对字典列表排序
+from itertools import groupby
+
+'''
+---note 1 对字典列表排序
 itermgetter()
 >>> l = [1,2,3]
 >>> f = itemgetter(0,2)
@@ -15,6 +19,10 @@ itermgetter()
 (1, 3)
 >>>
 
+---note 2 对对象排序
+groupby()
+# [k for k, g in groupby('AAAABBBCCDAABBB')] --> A B C D A B
+# [list(g) for k, g in groupby('AAAABBBCCD')] --> AAAA BBB CC D
 '''
 
 
@@ -49,17 +57,22 @@ def resolve_attr(obj, attr):
         obj = getattr(obj, name)
     return obj
 
+
 class User:
-        def __init__(self, user_id):
-            self.user_id = user_id 
-        def __repr__(self):
-            return 'User({})'.format(self.user_id)
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+    def __repr__(self):
+        return 'User({})'.format(self.user_id)
+
+
 def sort_notcompare():
-    users = [User(23), User(3), User(99)] 
+    users = [User(23), User(3), User(99)]
     print(users)
     print(sorted(users, key=lambda u: u.user_id))
-    #or code like this:
+    # or code like this:
     sorted(users, key=attrgetter('user_id'))
+
 
 if __name__ == '__main__':
 
@@ -74,3 +87,19 @@ if __name__ == '__main__':
     print('---note 1---')
 
     sort_notcompare()
+    print('---note 2---')
+    rows = [
+        {'address': '5412 N CLARK', 'date': '07/01/2012'},
+        {'address': '5148 N CLARK', 'date': '07/04/2012'},
+        {'address': '5800 E 58TH', 'date': '07/02/2012'},
+        {'address': '2122 N CLARK', 'date': '07/03/2012'},
+        {'address': '5645 N RAVENSWOOD', 'date': '07/02/2012'},
+        {'address': '1060 W ADDISON', 'date': '07/02/2012'},
+        {'address': '4801 N BROADWAY', 'date': '07/01/2012'},
+        {'address': '1039 W GRANVILLE', 'date': '07/04/2012'},
+    ]
+    rows.sort(key=itemgetter('date'))
+    for date, item in groupby(rows, key=itemgetter('date')):
+        print(date)
+        for i in item:
+            print(i)
