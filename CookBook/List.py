@@ -8,6 +8,7 @@
 '''
 from collections import Counter
 from operator import itemgetter
+from itertools import compress
 '''
 ---note 1 列表元素去重
 >>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
@@ -42,7 +43,28 @@ d
 ... print(x)
 
 filter()
+filter() 函数创建了一个迭代器,需要list()才能得到对应的列表
 
+itertools.compress()
+它以一个 iterable 对象和一个相对应的Boolean选择器序列作为输入参数。然后输出iterable对象中对 应选择器为 True 的元素。当你需要用另外一个相关联的序列来过滤某个序列的时候， 这个函数是非常有用的。
+>>> addresses = [
+...     '5412 N CLARK',
+...     '5148 N CLARK',
+...     '5800 E 58TH',
+...     '2122 N CLARK',
+...     '5645 N RAVENSWOOD',
+...     '1060 W ADDISON',
+...     '4801 N BROADWAY',
+...     '1039 W GRANVILLE',
+... ]
+>>> counts = [ 0, 3, 10, 4, 1, 7, 6, 1]
+>>> from itertools import compress
+>>> for i in compress(addresses, [i>5 for i in counts]):
+...     print(i)
+... 
+5800 E 58TH
+1060 W ADDISON
+4801 N BROADWAY
 '''
 
 def dedupe(items, key=None):
