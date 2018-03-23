@@ -14,8 +14,19 @@ from collections import OrderedDict, defaultdict \
 
 ---note 2 defaultdict
 一个键对应多个值的字典
+
+---note 3 namedtuple
+
+
+
 '''
 
+def compute_cost(records):
+    total = 0.0
+    for rec in records:
+        s = Stock(*rec)
+        total += s.shares * s.price 
+    return total
 
 if __name__ == '__main__':
     de = defaultdict(set)
@@ -35,4 +46,7 @@ if __name__ == '__main__':
     print('simple dict:',oo)
     print('---note 2---')
 
-
+    Stock = namedtuple('Stock', ['name', 'shares', 'price'])
+    s = Stock('ACME', 100, 123.45)
+    s = s._replace(**{'shares':75}) # or 'shares'=75
+    print(s)

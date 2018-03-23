@@ -6,9 +6,9 @@
 > Mail: f811194414@gmail.com
 > Created Time: 四  3/22 18:03:31 2018
 '''
+
 from collections import Counter
-from operator import itemgetter
-from itertools import compress
+
 '''
 ---note 1 列表元素去重
 >>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
