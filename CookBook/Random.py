@@ -10,7 +10,11 @@ from random import choice, sample, shuffle, randint, random, getrandbits
 '''
 ---note 1---random.choice
 random 模块使用 Mersenne Twister 算法来计算生成随机数。这是一个确定性算 法，但是你可以通过 random.seed() 函数修改初始化种子
+
+---note 2---ssl
+
 '''
+
 
 
 if __name__ == '__main__':
