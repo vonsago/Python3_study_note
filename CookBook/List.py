@@ -8,6 +8,7 @@
 '''
 
 from collections import Counter
+#itertools.compress 
 
 '''
 ---note 1 列表元素去重
