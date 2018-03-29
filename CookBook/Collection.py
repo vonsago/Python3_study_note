@@ -7,7 +7,7 @@
 > Created Time: 四  3/22 14:22:27 2018
 '''
 from collections import OrderedDict, defaultdict , namedtuple \
-        , ChainMap
+        , ChainMap, deque, Counter
 '''
 ---note 1 OrderedDict
 创建一个字典，并且在迭代或序列化这个字典的时候能够控制元素的顺序
@@ -29,6 +29,11 @@ ChainMap 使用原来的字典，它自己不创建新的字典(意味着更新�
 
 update()
 a.update(b)用于合并两个字点
+
+---note 5 Counter
+
+---note 6 deque
+和列表很相似，但是插入删除的效率会提高
 '''
 
 def compute_cost(records):
@@ -66,3 +71,23 @@ if __name__ == '__main__':
     b = {'y': 2, 'z': 4 }
     c = ChainMap(a,b)
     print(c)
+    print ('---note 4---')
+    words = [
+        'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+        'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
+        'eyes', "don't", 'look', 'around', 'the', 'eyes', 'look', 'into',
+        'my', 'eyes', "you're", 'under'
+    ]
+    morewords = ['why','are','you','not','looking','in','my','eyes']
+    word_counts = Counter(words)
+    # 出现频率最高的 3 个单词
+    top_three = word_counts.most_common(3)
+    print(top_three)
+    print('the',word_counts['the'])
+    word_counts.update(morewords)
+    print(word_counts)
+    '同类之间可以+ - '
+    print('---note 5---')
+    de = deque('123')
+    print(de.pop())
+    print('---note 6---')
