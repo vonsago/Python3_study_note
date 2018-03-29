@@ -11,6 +11,7 @@
 ---note 1---支持迭代操作的自定义对象
 目前为止，在一个对象上实现迭代最简单的方式是使用一个生成器函数
 实现一个以深度优先方式遍历树形节点的生成器
+使用 yield from 语句返回对应元素
 '''
 class Node:
     def __init__(self, value):
@@ -26,4 +27,6 @@ class Node:
         yield self
         for c in self:
             yield from c.depth_first()
+
+
 

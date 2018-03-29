@@ -28,6 +28,7 @@ key 函数参数模仿了 sorted() , min() 和 max() 等内置函数的相似功
 (5, 10, 2)
 >>> for i in range(*a.indices(len(s))):
 ... print(s[i])
+
 ...
 W
 r
@@ -66,6 +67,13 @@ itertools.compress()
 5800 E 58TH
 1060 W ADDISON
 4801 N BROADWAY
+
+---note 4 reversed
+反向迭代一个序列
+反向迭代仅仅当对象的大小可预先确定或者对象实现了 __reversed__() 的特殊 方法时才能生效。如果两者都不符合，那你必须先将对象转换为一个列表才行
+
+注意
+如果可迭代对象元素很多的话，将其预先转换为一个列表要消耗大量内存
 '''
 
 def dedupe(items, key=None):
@@ -117,3 +125,7 @@ if __name__ == '__main__':
             return False
     ivals = list(filter(is_int, values)) 
     print(ivals)
+    print('---note 4---')
+    a = [1,2,3,4]
+    for i in reversed(a):
+        print(i)
