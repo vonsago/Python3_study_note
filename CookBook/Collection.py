@@ -40,7 +40,7 @@ def compute_cost(records):
     total = 0.0
     for rec in records:
         s = Stock(*rec)
-        total += s.shares * s.price 
+        total += s.shares * s.price
     return total
 
 if __name__ == '__main__':
