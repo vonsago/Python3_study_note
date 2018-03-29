@@ -7,8 +7,6 @@
 > Created Time: 四  3/22 18:03:31 2018
 '''
 
-#itertools.compress 
-
 '''
 ---note 1 列表元素去重
 >>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
@@ -27,7 +25,6 @@ key 函数参数模仿了 sorted() , min() 和 max() 等内置函数的相似功
 (5, 10, 2)
 >>> for i in range(*a.indices(len(s))):
 ... print(s[i])
-
 ...
 W
 r
@@ -46,26 +43,6 @@ d
 filter()
 filter() 函数创建了一个迭代器,需要list()才能得到对应的列表
 
-itertools.compress()
-它以一个 iterable 对象和一个相对应的Boolean选择器序列作为输入参数。然后输出iterable对象中对 应选择器为 True 的元素。当你需要用另外一个相关联的序列来过滤某个序列的时候， 这个函数是非常有用的。
->>> addresses = [
-...     '5412 N CLARK',
-...     '5148 N CLARK',
-...     '5800 E 58TH',
-...     '2122 N CLARK',
-...     '5645 N RAVENSWOOD',
-...     '1060 W ADDISON',
-...     '4801 N BROADWAY',
-...     '1039 W GRANVILLE',
-... ]
->>> counts = [ 0, 3, 10, 4, 1, 7, 6, 1]
->>> from itertools import compress
->>> for i in compress(addresses, [i>5 for i in counts]):
-...     print(i)
-... 
-5800 E 58TH
-1060 W ADDISON
-4801 N BROADWAY
 
 ---note 4 reversed
 反向迭代一个序列
@@ -73,6 +50,10 @@ itertools.compress()
 
 注意
 如果可迭代对象元素很多的话，将其预先转换为一个列表要消耗大量内存
+
+
+---note 5 ---enumerate()
+迭代一个序列的同时跟踪正在被处理的元素索
 '''
 
 def dedupe(items, key=None):
@@ -96,7 +77,6 @@ if __name__ == '__main__':
     l = [1, 2, 3, 4, 5, 6, 7]
     print(l[a])
     print('---note 2---')
-    print('---note 3---')
     values = ['1', '2', '-3', '-', '4', 'N/A', '5'] 
     def is_int(val):
         try:
@@ -106,7 +86,13 @@ if __name__ == '__main__':
             return False
     ivals = list(filter(is_int, values)) 
     print(ivals)
-    print('---note 4---')
+    print('---note 3---')
     a = [1,2,3,4]
     for i in reversed(a):
         print(i)
+    print('---note 4---')
+
+    a = list('abcd')
+    for i in enumerate(a):
+        print(i)
+    print('---note 5---')
