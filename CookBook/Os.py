@@ -30,6 +30,15 @@
 >>> os.path.exists('/tmp/spam') 
 False
 
+>>> os.path.getsize('/etc/passwd')
+3669
+>>> os.path.getmtime('/etc/passwd') 
+1272478234.0
+>>> import time
+>>> time.ctime(os.path.getmtime('/etc/passwd'))
+'Wed Apr 28 13:10:34 2010'
+>>>
+>>>os.listdir('somedir')
 '''
 if __name__ == '__main__':
     pass
