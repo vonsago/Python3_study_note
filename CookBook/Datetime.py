@@ -59,4 +59,3 @@ if __name__ == '__main__':
     print(loc_d)
     bang_d = loc_d.astimezone(timezone('Asia/Kolkata'))
     print(bang_d)
-    
