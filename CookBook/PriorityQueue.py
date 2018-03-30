@@ -7,7 +7,10 @@
 > Created Time: 四  3/22 11:03:00 2018
 '''
 
-'''note 1:The Diff of __str__ and __repr__:
+import heapq
+
+'''
+note 1:The Diff of __str__ and __repr__:
 >>> class Item:
 ...     def __init__(self, s):
 ...             self.name = s
@@ -32,8 +35,10 @@
 
 fromat()
  “!r” 对应 repr()； “!s” 对应 str(); “!a” 对应 ascii()
+
+---note 2---heapq.merge()
+有一系列排序序列，想将它们合并后得到一个排序序列并在上面迭代遍历
 '''
-import heapq
 class PriorityQueue:
     def __init__(self):
         self._queue = []
@@ -61,3 +66,9 @@ if __name__ == '__main__':
     print(q.pop())
     print(q.pop())
     print(q.pop())
+    print('---note 1---')
+    a = [1,3,5,7]
+    b = [2,4,6,8,10]
+    for i in heapq.merge(a,b):
+        print(i,end=' ') 
+    print('---note 2---')
