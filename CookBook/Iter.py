@@ -10,6 +10,7 @@
 #itertools.islice适用于在迭代器和生成器上做切片操作
 #itertools.permutation它接受一个集合并产生一个元组序列，每个元组由集合中所有 元素的一个可能排列组成
 #itertools.combinations() 可得到输入集合中元素的所有的组合
+#itertools.chain 
 '''
 ---note 1---支持迭代操作的自定义对象
 目前为止，在一个对象上实现迭代最简单的方式是使用一个生成器函数
@@ -38,6 +39,11 @@ itertools.compress()
 1060 W ADDISON
 4801 N BROADWAY
 
+--note 3---
+>>> from itertools import chain >>> a = [1, 2, 3, 4]
+>>> b = ['x', 'y', 'z']
+>>> for x in chain(a, b):
+... print(x)
 
 '''
 class Node:
