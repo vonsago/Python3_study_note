@@ -15,7 +15,6 @@
 ---note 1---支持迭代操作的自定义对象
 目前为止，在一个对象上实现迭代最简单的方式是使用一个生成器函数
 实现一个以深度优先方式遍历树形节点的生成器
-使用 yield from 语句返回对应元素
 
 ---note 2---
 itertools.compress()
@@ -39,12 +38,16 @@ itertools.compress()
 1060 W ADDISON
 4801 N BROADWAY
 
---note 3---
->>> from itertools import chain >>> a = [1, 2, 3, 4]
+--note 3---chain
+>>> from itertools import chain 
+>>> a = [1, 2, 3, 4]
 >>> b = ['x', 'y', 'z']
 >>> for x in chain(a, b):
 ... print(x)
 
+---note 4---iter()
+iter 函数一个鲜为人知的特性是它接受一个可选的 callable 对象和一个标记(结尾)值作为输入参数。
+当以这种方式使用的时候，它会创建一个迭代器，这个迭代器会不断调用 callable 对象直到返回值和标记值相等为止
 '''
 class Node:
     def __init__(self, value):
@@ -62,4 +65,5 @@ class Node:
             yield from c.depth_first()
 
 
+if __name__ == '__main__':
 
