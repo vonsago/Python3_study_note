@@ -25,6 +25,9 @@ This module provides support for Unix shell-style wildcards, which are not the s
 [seq]	matches any character in seq
 [!seq]	matches any character not in seq
 
+---note 3 ---yield from
+将一个多层嵌套的序列展开成一个单层列表
+
 '''
 
 
@@ -61,8 +64,22 @@ Look for a regex pattern in a sequence of lines '''
 '''
 http://www.dabeaz.com/generators/
 '''
+
+
+def flatten(items, ignore_types=(str, bytes)): for x in items:
+    if isinstance(x, Iterable) and not isinstance(x, ignore_types): 
+        yield from flatten(x)
+    else:
+        yield x
+
 if __name__ = '__main__':
     lognames = gen_find('access-log*', 'www') files = gen_opener(lognames)
     lines = gen_concatenate(files)
     pylines = gen_grep('(?i)python', lines) for line in pylines:
     print(line)
+    print('---note 1,2---')
+
+    items = [1, 2, [3, 4, [5, 6], 7], 8] # Produces 1 2 3 4 5 6 7 8
+    for x in flatten(items):
+        print(x)
+    print('---note 3---')
