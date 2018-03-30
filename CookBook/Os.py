@@ -39,6 +39,14 @@ False
 'Wed Apr 28 13:10:34 2010'
 >>>
 >>>os.listdir('somedir')
+
+>>>#文件名匹配
+>>>import glob
+>>>pyfiles = glob.glob('somedir/*.py')
+>>>
+>>>from fnmatch import fnmatch
+>>>pyfiles = [name for name in os.listdir('somedir')if fnmatch(name, '*.py')]
+
 '''
 if __name__ == '__main__':
     pass
