@@ -10,6 +10,9 @@
 from functools import partial
 '''
 ---note 1---functools.partial
+functools.partial 用来创建一个每次被调用时从文件中读取固定数
+目字节的可调用对象。标记值 b'' 就是当到达文件结尾时的返回值
+
 在一个固定长度记录或者数据块的集合上迭代，而不是在一个文件中一行一 行的迭代
 '''
 
