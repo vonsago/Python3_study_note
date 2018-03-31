@@ -100,6 +100,7 @@ class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        print(self.__dict__)
 
 if  __name__ == '__main__':
     d = Date(2012, 12, 21)
