@@ -27,6 +27,7 @@ Properties 还是一种定义动态计算 attribute 的方法。这种类型的 
 ---note 3 --- 描述器类
 一个描述器就是一个实现了三个核心的属性访问操作 (get, set, delete) 的类
 '''
+
 _formats = {
     'ymd' : '{d.year}-{d.month}-{d.day}',
     'mdy' : '{d.month}/{d.day}/{d.year}',
@@ -43,7 +44,7 @@ class Date:
             code = 'ymd'
         fmt = _formats[code]
         return fmt.format(d=self)
-
+#---
 class Person:
     def __init__(self, first_name):
         self.first_name = first_name
@@ -64,12 +65,13 @@ class Person:
     @first_name.deleter
     def first_name(self):
         raise AttributeError("Can't delete attribute")
-
+#-
 class Circle:
     def __init__(self, radius): 
         self.radius = radius
     @property
     def area(self):
+        print('normal--')
         return math.pi * self.radius ** 2
     @property
     def diameter(self):
@@ -78,7 +80,7 @@ class Circle:
     def perimeter(self):
         return 2 * math.pi * self.radius
 
-
+#---
 # Descriptor attribute for an integer type-checked attribute
 class Integer:
     def __init__(self, name):
@@ -102,6 +104,9 @@ class Point:
         self.x = x
         self.y = y
         print(self.__dict__)
+
+
+#---
 # Descriptor for a type-checked attribute
 class Typed:
     def __init__(self, name, expected_type):
@@ -119,6 +124,7 @@ class Typed:
         print(instance.__dict__)
     def __delete__(self, instance):
         del instance.__dict__[self.name]
+
 # Class decorator that applies it to selected attributes
 def typeassert(**kwargs):
     def decorate(cls):
@@ -135,6 +141,32 @@ class Stock:
         self.shares = shares
         self.price = price
         print(self.__dict__)
+
+#---5
+class lazyproperty:
+    def __init__(self, func):
+        self.func = func
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self 
+        else:
+            value = self.func(instance)
+            setattr(instance, self.func.__name__, value) 
+            print( instance.__dict__)
+            return value
+class Circle1:
+    def __init__(self, radius):
+        self.radius = radius
+    @lazyproperty
+    def area(self):
+        print('Computing area')
+        return math.pi * self.radius ** 2
+    @lazyproperty
+    def perimeter(self): 
+        print('Computing perimeter') 
+        return 2 * math.pi * self.radius
+
+
 
 
 if  __name__ == '__main__':
@@ -153,3 +185,12 @@ if  __name__ == '__main__':
     p = Point(2, 3) 
     print('---note 3---')
     s = Stock('a',1,1.1)
+    print('---note 4---')
+    c = Circle1(5.0)
+    print(c.area)
+    print(c.__dict__)
+    print(c.area)
+    c = Circle(1.0)
+    print(c.area)
+    print(c.__dict__)
+    print(c.area)
