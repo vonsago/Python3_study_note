@@ -16,6 +16,21 @@ functools.partial 用来创建一个每次被调用时从文件中读取固定�
 在一个固定长度记录或者数据块的集合上迭代，而不是在一个文件中一行一行的迭代
 
  partial() 函数来固定某些参数值
+
+---note 2---额外状态的回调函数
+>>>def apply_async(func, args, *, callback): # Compute the result
+>>>result = func(*args)
+>>>    # Invoke the callback with the result
+>>>    callback(result)
+>>># HOW TO USE
+>>> def print_result(result): ... print('Got:', result) ...
+>>> def add(x, y):
+... return x + y
+...
+>>> apply_async(add, (2, 3), callback=print_result)
+Got: 5
+>>> apply_async(add, ('hello', 'world'), callback=print_result) Got: helloworld
+>>>
 '''
 
 
