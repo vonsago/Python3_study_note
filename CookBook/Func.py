@@ -37,22 +37,44 @@ Got: 5
 '''
 
 
-def test(a, b, c, d):
+def test1(a, b, c, d):
     return a, b, c, d
+
+def apply_async(func, args, *, callback): 
+    # Compute the result
+    result = func(*args)
 
 class Async:
     def __init__(self, func, args):
         self.func = func
         self.args = args
-    def inlined_async(func):
-        @wraps(func)
-        def wrapper(*args):
-            f = func(*args)
-            result_queue = Queue() result_queue.put(None) while True:
-result = result_queue.get() try:
+def inlined_async(func):
+    @wraps(func)
+    def wrapper(*args):
+        f = func(*args)
+        result_queue = Queue()
+        result_queue.put(None)
+        while True:
+            result = result_queue.get()
+            try:
                 a = f.send(result)
-apply_async(a.func, a.args, callback=result_queue.put) except StopIteration:
-break return wrapper
+                apply_async(a.func, a.args, callback=result_queue.put)
+            except StopIteration:
+                break 
+    return wrapper
+
+def add(x, y):
+    return x + y
+@inlined_async
+def test():
+    r = yield Async(add, (2, 3))
+    print(r)
+    r = yield Async(add, ('hello', 'world')) 
+    print(r)
+    for n in range(10):
+        r = yield Async(add, (n, n))
+        print(r) 
+    print('Goodbye')
 
 if __name__ == '__main__':
     #RECORD_SIZE = 32
@@ -61,5 +83,7 @@ if __name__ == '__main__':
     #    for r in records:
     #        print(r)
 
-    s = partial(test, 1,d=4)
+    s = partial(test1, 1,d=4)
     print(s(2,3))
+    print('---note 1(7.11)---')
+    test()
