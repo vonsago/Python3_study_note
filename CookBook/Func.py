@@ -8,6 +8,8 @@
 '''
 
 from functools import partial
+from queue import Queue 
+from functools import wraps
 '''
 ---note 1---functools.partial
 functools.partial 用来创建一个每次被调用时从文件中读取固定数
@@ -18,8 +20,9 @@ functools.partial 用来创建一个每次被调用时从文件中读取固定�
  partial() 函数来固定某些参数值
 
 ---note 2---额外状态的回调函数
->>>def apply_async(func, args, *, callback): # Compute the result
->>>result = func(*args)
+>>>def apply_async(func, args, *, callback): 
+>>>    # Compute the result
+>>>    result = func(*args)
 >>>    # Invoke the callback with the result
 >>>    callback(result)
 >>># HOW TO USE
@@ -37,6 +40,19 @@ Got: 5
 def test(a, b, c, d):
     return a, b, c, d
 
+class Async:
+    def __init__(self, func, args):
+        self.func = func
+        self.args = args
+    def inlined_async(func):
+        @wraps(func)
+        def wrapper(*args):
+            f = func(*args)
+            result_queue = Queue() result_queue.put(None) while True:
+result = result_queue.get() try:
+                a = f.send(result)
+apply_async(a.func, a.args, callback=result_queue.put) except StopIteration:
+break return wrapper
 
 if __name__ == '__main__':
     #RECORD_SIZE = 32
