@@ -47,6 +47,7 @@ class Date:
 class Person:
     def __init__(self, first_name):
         self.first_name = first_name
+        print(self.__dict__)
         print('init')
     # Getter function
     @property
@@ -101,6 +102,40 @@ class Point:
         self.x = x
         self.y = y
         print(self.__dict__)
+# Descriptor for a type-checked attribute
+class Typed:
+    def __init__(self, name, expected_type):
+        self.name = name
+        self.expected_type = expected_type 
+    def __get__(self, instance, cls):
+        if instance is None: 
+            return self
+        else:
+            return instance.__dict__[self.name]
+    def __set__(self, instance, value):
+        if not isinstance(value, self.expected_type):
+            raise TypeError('Expected ' + str(self.expected_type))
+        instance.__dict__[self.name] = value
+        print(instance.__dict__)
+    def __delete__(self, instance):
+        del instance.__dict__[self.name]
+# Class decorator that applies it to selected attributes
+def typeassert(**kwargs):
+    def decorate(cls):
+        for name, expected_type in kwargs.items():
+        # Attach a Typed descriptor to the class 
+            setattr(cls, name, Typed(name, expected_type))
+        return cls 
+    return decorate
+# Example use
+@typeassert(name=str, shares=int, price=float) 
+class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+        print(self.__dict__)
+
 
 if  __name__ == '__main__':
     d = Date(2012, 12, 21)
@@ -117,3 +152,4 @@ if  __name__ == '__main__':
     print('---note 2---')
     p = Point(2, 3) 
     print('---note 3---')
+    s = Stock('a',1,1.1)
