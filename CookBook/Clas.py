@@ -166,6 +166,17 @@ class Circle1:
         print('Computing perimeter') 
         return 2 * math.pi * self.radius
 
+#-- 简化的数据结构
+
+class BaseStruct:
+    _fields = []
+    def __init__(self, *args):
+        if len(self._fields) != len(args):
+            raise TypeError('Expected {} arguments'.format(len(self._fields)))
+        for name, value in zip(self._fields, args):
+            setattr(self, name, value)
+class Struct1(BaseStruct):
+    _fields = ['lng','lat']
 
 
 
@@ -194,3 +205,6 @@ if  __name__ == '__main__':
     print(c.area)
     print(c.__dict__)
     print(c.area)
+    print('---note 5---')
+    s1 = Struct1(1.1,2.2)
+    print(s1.lng,s1.lat,sep=',')
