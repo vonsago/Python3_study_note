@@ -16,10 +16,13 @@ __format__
 __enter__
 __exit__
 __slots__
-
+__getattr__ 是在访问 attribute 不存在的时候被调用
 __private 和 __private_method
 
 super()
+
+
+
 ---note 2--- @property
 property 的一个关键特征是它看上去跟普通的 attribute 没什么两样，但是访问它 的时候会自动触发 getter 、setter 和 deleter 方法
 Properties 还是一种定义动态计算 attribute 的方法。这种类型的 attributes 并不会 被实际的存储，而是在需要的时候计算出来
@@ -177,6 +180,17 @@ class BaseStruct:
             setattr(self, name, value)
 class Struct1(BaseStruct):
     _fields = ['lng','lat']
+
+
+#-- 代理
+class B2:
+    def __init__(self):
+        self._a = A()
+    def bar(self): 
+        pass
+    # Expose all of the methods defined on class A
+    def __getattr__(self, name):
+        return getattr(self._a, name)
 
 
 
