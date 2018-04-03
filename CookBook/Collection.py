@@ -6,6 +6,8 @@
 > Mail: f811194414@gmail.com
 > Created Time: 四  3/22 14:22:27 2018
 '''
+import collections
+import bisect
 from collections import OrderedDict, defaultdict , namedtuple \
         , ChainMap, deque, Counter
 '''
@@ -34,6 +36,11 @@ a.update(b)用于合并两个字点
 
 ---note 6 deque
 和列表很相似，但是插入删除的效率会提高
+
+---note 7
+自定义容器
+
+
 '''
 
 def compute_cost(records):
@@ -42,6 +49,22 @@ def compute_cost(records):
         s = Stock(*rec)
         total += s.shares * s.price
     return total
+
+
+# DIY collections
+
+class SortedItems(collections.Sequence):
+    def __init__(self, initial=None):
+        self._items = sorted(initial) if initial is not None else []
+    # Required sequence methods
+    def __getitem__(self, index):
+        return self._items[index]
+    def __len__(self):
+        return len(self._items)
+    # Method for adding an item in the right location
+    def add(self, item):
+        bisect.insort(self._items, item)
+
 
 if __name__ == '__main__':
     de = defaultdict(set)
@@ -91,3 +114,10 @@ if __name__ == '__main__':
     de = deque('123')
     print(de.pop())
     print('---note 6---')
+    
+    items = SortedItems([5, 1, 3])
+    print(list(items))
+    print(items[0], items[-1]) 
+    items.add(2)
+    print(list(items))
+    print('---note 7---')
