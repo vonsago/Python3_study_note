@@ -21,6 +21,7 @@ def second2time(s,date_format = "%Y-%m-%d %H:%M:%S"):
 
 
 if __name__ == "__main__":
+    print(time.time())
     time_now = time2second()
     print(time_now)
     print(second2time(time_now))
