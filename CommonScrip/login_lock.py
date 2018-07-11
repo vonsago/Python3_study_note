@@ -20,7 +20,7 @@ def conform_password_level(password, password_level):
     if len(password) < password_level:
         return False
     if password_level == 8:
-        if re.search('[0-9]', password)==None or re.search('[a-z]', password)==None or re.search('[A-Z]', password)==None:
+        if not re.search('[0-9]', password) or not re.search('[a-z]', password) or not re.search('[A-Z]', password):
             return False
     if password_level == 10:
         if re.search('\W', password)==None:
