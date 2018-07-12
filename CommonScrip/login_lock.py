@@ -49,7 +49,7 @@ if __name__ == '__main__':
     s2 = 'abc'
     s3 = s1+s2
     s4 = s3+ "%*_"
-    
+
     print(conform_password_level(s1,0))
     print(conform_password_level(s1+s1,1))
     print(conform_password_level(s2+s3+"AWEF",2))
