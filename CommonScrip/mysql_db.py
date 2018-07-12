@@ -34,7 +34,7 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
     
-    user_status = session.query(UserStatus).filter(UserStatus.name == 'admin').first()
+    user_status = session.query(UserStatus).filter(UserStatus.name == "admin").first
     if not user_status:
         user_status = UserStatus(
                 id=str(uuid4()),
@@ -46,5 +46,5 @@ if __name__ == "__main__":
                 password_period=0,
                 max_try_times=3
             )
-    print(user_status)
+    print(user_status.name,user_status.last_login_time)
 
