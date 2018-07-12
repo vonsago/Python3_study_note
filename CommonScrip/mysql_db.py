@@ -14,7 +14,6 @@ from sqlalchemy import Column, String, Integer, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.mysql import DOUBLE
 from sqlalchemy.ext.declarative import declarative_base
-import pymysql
 
 Base = declarative_base()
 
@@ -31,7 +30,7 @@ class UserStatus(Base):
     max_try_times = Column(Integer, default=0)  # 最大尝试次数
 
 if __name__ == "__main__":
-    engine = create_engine('mysql://root:dangerous@localhost/csp-test', echo=True)
+    engine = create_engine('mysql+pymysql://root:dangerous@localhost/csp-test', echo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
     
