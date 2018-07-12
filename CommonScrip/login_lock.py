@@ -9,6 +9,7 @@
 import time
 import re
 
+
 def conform_password_time(last_change_password_time,password_period):
     if last_change_password_time + password_period *86400 <= time.time():
         return True
