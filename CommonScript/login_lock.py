@@ -15,18 +15,16 @@ def conform_password_time(last_change_password_time,password_period):
         return True
     return False
 
-def conform_password_level(password, password_level):
-    levels = {0:0, 1:6, 2:8, 3:10}
-    password_level = levels[password_level]
-    if len(password) < password_level:
-        return False
-    if password_level == 8:
-        if not re.search('[0-9]', password) or not re.search('[a-z]', password) or not re.search('[A-Z]', password):
-            return False
-    if password_level == 10:
-        if re.search('\W', password)==None:
-            return False
-    return True
+
+password_level = {
+        0: (0, lambda x: True if re.search('.', x) else False),
+        1: (6, lambda x: True if re.search('.', x) else False),
+        2: (8, lambda x: False if not re.search('[0-9]', x) or not re.search('[a-z]', x) or not re.search('[A-Z]', x) else True),
+        3: (10, lambda x: True if re.search('\W', x) else False)
+        }
+
+def conform_password_level(password, level):
+    return True if password_level[level][0] <= len(password) and password_level[level][1](password) else False
 
 def update_password():
     pass
@@ -46,12 +44,7 @@ def judge_locking(name, last_login_time, last_fail_times, max_try_times):
 
 
 if __name__ == '__main__':
-    s1 = '123'
-    s2 = 'abc'
-    s3 = s1+s2
-    s4 = s3+ "%*_"
-
-    print(conform_password_level(s1,0))
-    print(conform_password_level(s1+s1,1))
-    print(conform_password_level(s2+s3+"AWEF",2))
-    print(conform_password_level(s4+"DSFGJAS",3))
+    for i in range(10):
+        data = input()
+        password , level = data.split(' ')
+        print(conform_password_level(password, int(level)))
