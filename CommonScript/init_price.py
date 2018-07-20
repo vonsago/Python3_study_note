@@ -28,7 +28,7 @@ import requests
 
 LOG = logging.getLogger(__name__)
 # csp 地址，管理员账户密码
-base_url = os.getenv("CSP_URL", "http://106.75.62.38:31835")
+#base_url = os.getenv("CSP_URL", "http://106.75.19.23:32120/")
 username = os.getenv("CSP_USERNAME", "admin")
 password = os.getenv("CSP_PASSWORD", "admin")
 
@@ -121,7 +121,7 @@ def get_bullet_by_name(name, bullets=None):
     return 0
 
 
-def init_price():
+def init_price(base_url):
     csp_client = CSPClient(base_url, username, password)
     for service in csp_client.get_all_service():
         for plan in csp_client.get_all_plan(service.get('id')):
@@ -151,7 +151,9 @@ def init_price():
 
 
 if __name__ == '__main__':
+    ipp = input('http://+ip: ')
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)-8s %(message)s')
-    init_price()
+    print('--init--',ipp)
+    init_price(ipp)
 
 
