@@ -25,11 +25,25 @@ def list_pod_names():
     return pod_names
 
 def get_pod_imageVersion(pod_name):
-    print("pod name:"pod_name)
-    version = os.popen("http://"+IP+pod_name).read()
+    print("pod name:",pod_name)
+    url = "http://"+IP+pod_name
+    version = os.popen(COMMON.format(url=url)).read()
+    version=json.loads(version)
+    print(version)
+    container = version["status"]["containerStatuses"][0]
+    image = container['image'].split(':')[-1]
+    #name = container['name']
+    return image
+
+def check_name_equal(n1,n2):
+    pass
 
 if __name__ == "__main__":
     app_name = sys.argv[1]
+    pnames = list_pod_names()
+    for p in pnames:
+        if p == app_name:
+            get_pod_imageVersion(p)
 
-#    r = list_pod_names()
+
 #    print(r)
