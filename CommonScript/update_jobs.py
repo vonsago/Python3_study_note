@@ -7,7 +7,6 @@
 > Created Time: 三  7/25 19:24:37 2018
 '''
 
-import requests
 import os
 import sys
 import json
@@ -25,25 +24,32 @@ def list_pod_names():
     return pod_names
 
 def get_pod_imageVersion(pod_name):
-    print("pod name:",pod_name)
+    #print("pod name:",pod_name)
     url = "http://"+IP+pod_name
     version = os.popen(COMMON.format(url=url)).read()
     version=json.loads(version)
-    print(version)
     container = version["status"]["containerStatuses"][0]
     image = container['image'].split(':')[-1]
     #name = container['name']
     return image
 
 def check_name_equal(n1,n2):
-    pass
+    n1 = "-".join(n1.split('/')[-1].split('-')[:-2])
+    if n1 == n2+'-adapter' or n1 == n2+'-app-broker' or n1==n2+'-controller' or n1==n2+'-worker':
+        return True
+    return False
+
+def check_updated(app_name, image):
+    pnames = list_pod_names()
+    for p in pnames:
+        if check_name_equal(p,app_name):
+            im = get_pod_imageVersion(p)
+            if im == image:
+                upup.append(p.split('/')[-1])
 
 if __name__ == "__main__":
     app_name = sys.argv[1]
-    pnames = list_pod_names()
-    for p in pnames:
-        if p == app_name:
-            get_pod_imageVersion(p)
-
-
-#    print(r)
+    image = sys.argv[2]
+    upup = []
+    check_updated(app_name, image)
+    print(upup)
