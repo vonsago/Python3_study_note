@@ -28,11 +28,14 @@ def get_pod_imageVersion(pod_name):
     url = "http://"+IP+pod_name
     version = os.popen(COMMON.format(passkey=passkey,url=url)).read()
     version=json.loads(version)
-    container = version["status"]["containerStatuses"][0]
-    image = container['image'].split(':')[-1]
-    status = container['ready']
-    if status :
-        return image
+    try:
+        container = version["status"]["containerStatuses"][0]
+        image = container['image'].split(':')[-1]
+        status = container['ready']
+        if status :
+            return image
+    except:
+        pass
     return ""
 
 def check_name_equal(n1,n2):
