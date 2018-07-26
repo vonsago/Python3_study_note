@@ -9,6 +9,7 @@
 
 import os
 import sys
+import time
 import json
 
 IP = "192.168.101.26"
@@ -35,7 +36,7 @@ def get_pod_imageVersion(pod_name):
 
 def check_name_equal(n1,n2):
     n1 = "-".join(n1.split('/')[-1].split('-')[:-2])
-    if n1 == n2+'-adapter' or n1 == n2+'-app-broker' or n1==n2+'-controller' or n1==n2+'-worker':
+    if n1 == n2+'-adapter' or n1 == n2+'-app-broker' or n1==n2+'-controller' or n1==n2+'-worker' or n1==n2+'-ui':
         return True
     return False
 
@@ -48,8 +49,18 @@ def check_updated(app_name, image):
                 upup.append(p.split('/')[-1])
 
 if __name__ == "__main__":
+    # python update_jobs.py dsp-dev develop-31c4e8d api
     app_name = sys.argv[1]
     image = sys.argv[2]
-    upup = []
-    check_updated(app_name, image)
-    print(upup)
+    ty = sys.argv[3]
+    for i in range(10):
+        upup = []
+        check_updated(app_name, image)
+        print(upup)
+        if ty == 'api' and len(upup) == 4:
+            exit(1)
+        elif ty == 'ui' and len(upup) == 1:
+            exit(1)
+        time.sleep(10)
+
+    exit(0)
