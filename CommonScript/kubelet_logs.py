@@ -14,11 +14,20 @@ class sshClient():
         self.username = username
         self.password = password
 
-    def _create_client(self):
+    def _create_client(self, port=22, timeout=5, local_host_key=False):
         ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(self.ip, 22, self.username, self.password, timeout=5)
+        if not local_host_key:
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        else:
+            ssh.load_system_host_keys()
+        ssh.connect(self.ip, port, self.username, self.password, timeout=timeout)
         return ssh
 
     def exec_command(self, client, cmd):
-        client.exec_command(cmd)
+        stdin, stdout, stderr = client.exec_command(cmd)
+        return stdin, stdout, stderr
+
+
+if __name__ == "__main__":
+    ip = ""
+    nclient = sshClient(ip, un, pw)
