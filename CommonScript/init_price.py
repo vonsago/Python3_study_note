@@ -1,16 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
-
-import urllib
-
-#url = 'http://www.animephile.com/mangagallery/Neesan/Volume 01/neesan_v01_{0}.JPG'
-#if __name__ == '__main__':
-#    for i in range(164,208):
-#        u = url.format('%03d'%i)
-#        urllib.urlretrieve(u, '/Users/vassagovon/My_code/oopic/{}.jpg'.format(i))
-#        print 'ok = {}'.format(i)
-#
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -28,9 +16,10 @@ import requests
 
 LOG = logging.getLogger(__name__)
 # csp 地址，管理员账户密码
-#base_url = os.getenv("CSP_URL", "http://106.75.19.23:32120/")
+base_url = os.getenv("CSP_URL", "http://127.0.0.1:8000")
 username = os.getenv("CSP_USERNAME", "admin")
 password = os.getenv("CSP_PASSWORD", "admin")
+charging = os.getenv("CHARGING", True)
 
 # 根据价格计算plan定价：根据下面的资源单价会为每个服务的每个规格配置按月，按年，按时三种价格：
 
@@ -94,6 +83,16 @@ class CSPClient(object):
             return []
         return response.json()
 
+    def open_charging(self, charging):
+        response = requests.put('{}/v1/settings/system'.format(self.base_url), json={
+            "charging_enable": charging
+        },
+                                headers=self._add_auth_header())
+        if response.status_code >= 400:
+            LOG.warning('get services error: %s:%s', response.status_code, response.text)
+            return []
+        return response.json()
+
     def set_plan_price(self, service, plan, charging_rule_details):
         charging_rules = requests.get('{}/v1/charging_rules?product_id={}'.format(self.base_url, plan.get('id')),
                                       headers=self._add_auth_header()).json()
@@ -121,8 +120,9 @@ def get_bullet_by_name(name, bullets=None):
     return 0
 
 
-def init_price(base_url):
+def init_price():
     csp_client = CSPClient(base_url, username, password)
+    csp_client.open_charging(charging)
     for service in csp_client.get_all_service():
         for plan in csp_client.get_all_plan(service.get('id')):
             # [{"name": "cpu", "unit": "core", "value": 0.1}, {"name": "memory", "unit": "m", "value": 8192}, {"name": "disk", "unit": "g", "value": 32}, {"name": "gpu", "unit": "gpu", "value": 0}]
@@ -147,13 +147,10 @@ def init_price(base_url):
                                 "price": int(get_year_price(n))}]
                 }]
             csp_client.set_plan_price(service, plan, price)
-
+            LOG.info(f"add service {service.get('name')}  plan {plan.get('name')} price {get_month_price(n)}")
 
 
 if __name__ == '__main__':
-    ipp = input('http://+ip: ')
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)-8s %(message)s')
-    print('--init--',ipp)
-    init_price(ipp)
-
+    init_price()
 
