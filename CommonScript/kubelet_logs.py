@@ -31,11 +31,10 @@ class sshClient():
     #    return stdin, stdout, stderr
 
 if __name__ == "__main__":
-    configparser.
-    nclient = sshClient(ip, un, pw)
+    config = configparser.ConfigParser()
+    config.read("config.conf")
+    nclient = sshClient(config.get('ssh','host'), config.get('ssh','username'), config.get('ssh','password'))
     ssh = nclient._create_client(local_host_key=True)
     cmd = "ls -l"
     stdin, stdout, stderr = ssh.exec_command(cmd)
-
-    stdin.write("cat /etc/hosts")
-    print(stdin.readlines()) 
+    print(stdout.readlines())
