@@ -255,6 +255,9 @@ class House:
 # ---
 # * 8.26
 
+clas Span(object):
+    def __init__(self, name):
+        self.name = name
 import weakref
 _spam_cache = weakref.WeakValueDictionary() 
 def get_spam(name):
