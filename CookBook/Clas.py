@@ -268,6 +268,20 @@ def get_spam(name):
         s = _spam_cache[name]
         return s
 
+# --
+# * 9.1
+import time
+from functools import wraps 
+def timethis(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(func.__name__, end-start)
+        return result
+    return wrapper
+
 
 if  __name__ == '__main__':
     d = Date(2012, 12, 21)
