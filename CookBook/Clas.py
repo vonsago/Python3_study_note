@@ -252,6 +252,20 @@ class House:
         return self.living_space_footage < other.living_space_footage
 
 
+# ---
+# * 8.26
+
+import weakref
+_spam_cache = weakref.WeakValueDictionary() 
+def get_spam(name):
+    if name not in _spam_cache:
+        s = Spam(name)
+        _spam_cache[name] = s 
+    else:
+        s = _spam_cache[name]
+        return s
+
+
 if  __name__ == '__main__':
     d = Date(2012, 12, 21)
     print(format(d))
