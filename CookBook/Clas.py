@@ -48,6 +48,7 @@ class Date:
         fmt = _formats[code]
         return fmt.format(d=self)
 #---
+#* 8.6
 class Person:
     def __init__(self, first_name):
         self.first_name = first_name
@@ -219,7 +220,6 @@ class Spam:
         self.x = x
     def bar(self, y):
         print('Spam.bar:', self.x, y)
-
 
 
 if  __name__ == '__main__':
