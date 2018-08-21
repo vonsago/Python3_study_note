@@ -47,9 +47,10 @@ def check_name_equal(n1,n2):
 def check_updated(app_name, image):
     pnames = list_pod_names()
     for p in pnames:
-        #print(p, app_name)
+        print(p, app_name)
         if check_name_equal(p,app_name):
             im = get_pod_imageVersion(p)
+            print(im , image)
             if im == image:
                 upup.append(p.split('/')[-1])
 
