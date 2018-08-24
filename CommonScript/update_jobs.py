@@ -19,7 +19,10 @@ COMMON = "curl -s -u {passkey} {url}"
 def list_pod_names():
     pods_url = URL.format(ip=IP, namespace="default")
     pods = os.popen(COMMON.format(passkey=passkey,url=pods_url)).read()
-    lis = json.loads(pods)['items']
+    try:
+        lis = json.loads(pods)['items']
+    except:
+        print(pods)
     pod_names = [i["metadata"]["selfLink"] for i in lis]
     return pod_names
 
