@@ -26,7 +26,7 @@ url = 'http://192.168.101.26:31680/v1/instance_group'
 
 def get_bodys(len):
     for x in range(len):
-        yield {"parameters":[{"params":[{"id":"name","value":"nginxa{}".format(str(x))},{"id":"clustersize","value":1},{"id":"imagename","value":"nginx:latest"},{"id":"containerport","value":"80"},{"id":"containercmd","value":[]},{"id":"containerparams","value":[]},{"id":"envs","value":[]},{"id":"registryuser","value":""},{"id":"registrypassword","value":""},{"id":"monitorstatus","value":False},{"id":"monitortype","value":"java"},{"id":"monitorport","value":80},{"id":"monitorname","value":""},{"id":"monitorpassword","value":""}],"plan_id":"a874d348-414c-4d9d-838b-6297f7d0617f","space_id":"cd54c37f-3f60-4ac9-b7a3-5e704d8532e2","service_id":"43ae4f73-a11f-4136-8cb1-460987e0ea7f","zone_id":"dc6a02a0-2600-4897-a0d5-dfb4d36aa0bd","binding_instances":[]}]}
+        yield {"parameters":[{"params":[{"id":"name","value":"nginxb{}".format(str(x))},{"id":"clustersize","value":1},{"id":"imagename","value":"nginx:latest"},{"id":"containerport","value":"80"},{"id":"containercmd","value":[]},{"id":"containerparams","value":[]},{"id":"envs","value":[]},{"id":"registryuser","value":""},{"id":"registrypassword","value":""},{"id":"monitorstatus","value":False},{"id":"monitortype","value":"java"},{"id":"monitorport","value":80},{"id":"monitorname","value":""},{"id":"monitorpassword","value":""}],"plan_id":"a874d348-414c-4d9d-838b-6297f7d0617f","space_id":"cd54c37f-3f60-4ac9-b7a3-5e704d8532e2","service_id":"43ae4f73-a11f-4136-8cb1-460987e0ea7f","zone_id":"dc6a02a0-2600-4897-a0d5-dfb4d36aa0bd","binding_instances":[]}]}
 
 bodys = get_bodys(100000)
 
@@ -42,5 +42,6 @@ gs = []
 for body in bodys:
     g = execute_pool.apply_async(request, args=(body,))
     gs.append(g)
+    request(body)
 
 gevent.joinall(gs)
