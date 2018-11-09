@@ -30,11 +30,18 @@ class A(object):
 
 #单例模式
 class Singleton(object):
-    def __new__(cls, *args, **kargv):
-        if not hasattr(cls, "_instance"):
-            origin = super(Singleton, cls)
-            cls._instance = orig.__new__(cls, *args, **kargv)
-        return cls._instance
+    _mapper = {}
+    def __new__(cls, zone):
+        if zone not in cls._mapper:
+            orig = super(Singleton, cls)
+            cls._mapper[zone] = orig.__new__(cls)
+        return cls._mapper[zone]
+
+    def __init__(self, zone):
+        self.zone = zone
+
+    def test(self):
+        print(self._mapper,self.zone)
 class MyClass(Singleton):
     a = 1
 
@@ -43,3 +50,11 @@ if __name__ == "__main__":
     A.class_foo(1)
     A().foo(2)
     A.static_foo(3)
+
+    s = Singleton("123")
+    s.test()
+    b = Singleton("333")
+    b.test()
+    i = Singleton("444")
+    i.test()
+    print(Singleton("123")._mapper)
