@@ -40,8 +40,8 @@ class Singleton(object):
     def __init__(self, zone):
         self.zone = zone
 
-    def test(self):
-        print(self._mapper,self.zone)
+    def test(self, res):
+        print(self._mapper,self.zone, res)
 class MyClass(Singleton):
     a = 1
 
@@ -52,9 +52,10 @@ if __name__ == "__main__":
     A.static_foo(3)
 
     s = Singleton("123")
-    s.test()
+    s.test("aa")
     b = Singleton("333")
-    b.test()
+    b.test("bb")
     i = Singleton("444")
-    i.test()
+    i.test("cc")
     print(Singleton("123")._mapper)
+    getattr(Singleton,"test")
