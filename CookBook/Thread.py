@@ -10,6 +10,9 @@
 #
 #================================================================
 
+from concurrent import futures
+import threading
+import time
 
 def task(n):
     print('{}: sleeping {}'.format(
@@ -30,6 +33,8 @@ def test():
     results = ex.map(task, range(5, 0, -1))
     print('main: unprocessed results {}'.format(results))
     print('main: waiting for real results')
+
+def add_call_back():
 
 
 if __name__ == '__main__':
