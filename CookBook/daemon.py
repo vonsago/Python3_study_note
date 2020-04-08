@@ -13,6 +13,8 @@
 '''
 descriptors:
     Unxi daemon
+    
+    new https://www.python.org/dev/peps/pep-3143/#abstract
 '''
 
 import os
